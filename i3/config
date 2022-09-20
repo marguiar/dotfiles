@@ -1,0 +1,212 @@
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+# VARIABLES
+set $mod Mod4
+
+# bindsym shortener
+set $sup bindsym Mod4
+
+# exec shortener
+set $exe exec --no-startup-id
+set $exe_always exec_always --no-startup-id
+
+# user local bin path
+set $bin ~/bin
+
+#monitor outputs
+set $mon_1 output DisplayPort-0
+set $mon_2 output VGA-0
+
+# float enable
+set $is_float floating enable
+
+# default terminal
+set $term xfce4-terminal
+
+# WORKSPACES
+
+# labels
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws10 "10"
+
+# outputs
+workspace $ws1  $mon_1
+workspace $ws2  $mon_1
+workspace $ws3  $mon_1
+workspace $ws4  $mon_1
+workspace $ws10 $mon_2
+
+workspace_auto_back_and_forth yes
+
+$sup+1 workspace $ws1
+$sup+Home workspace $ws1
+
+$sup+2 workspace $ws2
+$sup+3 workspace $ws3
+$sup+4 workspace $ws4
+$sup+0 workspace $ws10
+
+$sup+Control+Right workspace next
+$sup+Control+Left workspace prev
+
+# moving to
+$sup+Shift+1 move container to workspace $ws1;  workspace $ws1
+$sup+Shift+2 move container to workspace $ws2;  workspace $ws2
+$sup+Shift+3 move container to workspace $ws3;  workspace $ws3
+$sup+Shift+4 move container to workspace $ws4;  workspace $ws4
+$sup+Shift+0 move container to workspace $ws10; workspace $ws10
+
+font pango:Open Sans 8
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
+
+# Media volume controls
+# bindsym XF86AudioMute exec amixer sset 'Master' toggle
+# bindsym XF86AudioLowerVolume exec amixer sset 'Master' 5%-
+# bindsym XF86AudioRaiseVolume exec amixer sset 'Master' 5%+
+
+# Media player controls
+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# LAUNCHERS
+
+# Terminal
+$sup+Return exec $term
+
+# Browser
+$sup+b exec chrome
+
+# Calculator
+$sup+c exec gnome-calculator
+
+# Nemo
+$sup+e exec nemo
+
+#Spotify
+$sup+m exec spotify
+
+
+# Rofi
+bindsym Mod1+space exec rofi -show drun
+
+# kill focused window
+$sup+q kill
+
+# start dmenu (a program launcher)
+$sup+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# $sup+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+$sup+Left focus left
+$sup+Down focus down
+$sup+Up focus up
+$sup+Right focus right
+
+# move focused window
+$sup+Shift+Left move left
+$sup+Shift+Down move down
+$sup+Shift+Up move up
+$sup+Shift+Right move right
+
+# change stack position
+$sup+slash split toggle
+
+# enter fullscreen mode for the focused container
+$sup+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+$sup+o layout toggle split v split h
+$sup+Shift+question layout toggle tabbed split
+
+# toggle tiling / floating
+$sup+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+$sup+space focus mode_toggle
+
+# focus the parent container
+$sup+a focus parent
+
+# focus the child container
+#$sup+d focus child
+
+
+# reload the configuration file
+$sup+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+$sup+Shift+r restart
+# exit i3 (logs you out of your X session)
+$sup+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        $sup+r mode "default"
+}
+
+$sup+r mode "resize"
+
+# bar {
+#         $mon_1
+#         position top
+#         status_command i3status
+#         font pango:Open Sans 10
+#         height 20
+#         i3bar_command i3bar
+# }
+
+# START-UP
+$exe_always ~/.config/polybar/launch.sh --forest -r
+$exe_always ~/.config/i3/scripts/autolayout.py
+$exe nitrogen --restore
+$exe picom -CGb
+$exe redshift
+$exe xset -dpms s off
+
+for_window [class=".*"] border pixel 2
+gaps inner 8
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #fca311 #384147 #ffffff #2e9ef4   #fca311
+
+# FLOATING APPS # xprop -> to see the class and instance
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="Gnome-calculator" instance="gnome-calculator"] floating enable
+for_window [class="Gnome-calendar" instance="gnome-calendar"] floating enable
+for_window [class="Nitrogen" instance="nitrogen"] floating enable
