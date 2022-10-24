@@ -92,7 +92,7 @@ $sup+e exec nemo
 #Spotify
 $sup+m exec spotify
 # Rofi Menu
-bindsym Mod1+space exec rofi -show drun
+bindsym Mod1+space exec ulauncher-toggle
 
 ## SHORTCUTS 'xev' to get key press
 $sup+s exec cinnamon-settings
@@ -163,10 +163,12 @@ $exe nitrogen --restore
 $exe picom -CGb
 $exe redshift
 $exe xset -dpms s off
+$exe ulauncher --hide-window --no-window-shadow
 
 ## I3-GAPS
 for_window [class=".*"] border pixel 2
 gaps inner 8
+hide_edge_borders smart
 
 ## WINDOW AND BORDER STYLE
 # class                 border  backgr. text    indicator child_border
@@ -179,4 +181,5 @@ for_window [class="Gnome-calendar" instance="gnome-calendar"] floating enable
 for_window [class="Gnome-screenshot" instance="gnome-screenshot"] floating enable
 for_window [class="Nitrogen" instance="nitrogen"] floating enable
 for_window [class="Cinnamon-settings.py" instance="cinnamon-settings.py"] floating enable
-for_window [class="cinnamon-settings sound" instance="cinnamon-settings sound"] floating enable
+for_window [class="cinnamon-settings *" instance="cinnamon-settings *"] floating enable
+for_window [class="Ulauncher" instance="ulauncher"] floating enable  border pixel 0
