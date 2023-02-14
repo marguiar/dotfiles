@@ -10,8 +10,10 @@ set $exe_always exec_always --no-startup-id
 # user local bin path
 set $bin ~/bin
 #monitor outputs
-set $mon_1 output DisplayPort-0
-set $mon_2 output VGA-0
+# set $mon_1 output DP-1
+# set $mon_2 output DVI-I-2-1
+set $mon_1 output HDMI-1
+set $mon_2 output DP-1
 # float enable
 set $is_float floating enable
 # default terminal
@@ -77,6 +79,9 @@ bindsym XF86AudioPause exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+# Toggle on/off notebook display
+$sup+Shift+o exec ~/dotfiles/handle-lid.sh
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod1
 
@@ -99,7 +104,9 @@ $sup+s exec cinnamon-settings
 # Screenshot
 bindsym --release Print exec gnome-screenshot
 bindsym --release Mod1+Print exec gnome-screenshot -w
-bindsym --release Shift+Print exec gnome-screenshot -ac
+bindsym --release Shift+Print exec gnome-screenshot -a
+# Diodon
+$sup+v exec ~/.config/clipboard-manager.sh
 
 $sup+F10 exec cinnamon-settings sound
 
@@ -113,6 +120,10 @@ $sup+Left focus left
 $sup+Down focus down
 $sup+Up focus up
 $sup+Right focus right
+
+$sup+Mod1+Left focus output left
+$sup+Mod1+Right focus output right
+
 # move focused window
 $sup+Shift+Left move left
 $sup+Shift+Down move down
@@ -157,17 +168,26 @@ mode "resize" {
 $sup+r mode "resize"
 
 ## START-UP
+$exe ~/dotfiles/vpn-connect.sh # VPN
+$exe_always ~/.screenlayout/3home.sh
+# $exe_always ./get-hwmon-path.sh # Get the correct temperature sensor
 $exe_always ~/.config/polybar/launch.sh --forest -r
-$exe_always ~/.config/i3/scripts/autolayout.py
+#$exe_always ~/.config/i3/scripts/autolayout.py
 $exe nitrogen --restore
-$exe picom -CGb
+$exe sleep 5 && picom -CGb
 $exe redshift
-$exe xset -dpms s off
+$exe xset -dpms s off # Disable screen saver
+$exe /usr/bin/diodon --start-in-tray # Clipboard manager
 $exe ulauncher --hide-window --no-window-shadow
+
+## Custom layouts at startup
+$exe i3-msg "workspace $ws1; append_layout ~/.config/i3-layouts/w-1.js on; exec slack"
+$exe i3-msg "workspace $ws2; append_layout ~/.config/i3-layouts/w-2.json; exec code"
+$exe i3-msg "workspace $ws10; append_layout ~/.config/i3-layouts/w-0.json; exec chrome; exec chrome; exec spotify"
 
 ## I3-GAPS
 for_window [class=".*"] border pixel 2
-gaps inner 8
+gaps inner 6
 hide_edge_borders smart
 
 ## WINDOW AND BORDER STYLE
@@ -183,3 +203,5 @@ for_window [class="Nitrogen" instance="nitrogen"] floating enable
 for_window [class="Cinnamon-settings.py" instance="cinnamon-settings.py"] floating enable
 for_window [class="cinnamon-settings *" instance="cinnamon-settings *"] floating enable
 for_window [class="Ulauncher" instance="ulauncher"] floating enable  border pixel 0
+for_window [class="Slack" instance="slack"] border pixel 0
+for_window [class="Slack" title="* - Círculo"] floating enable border pixel 0
