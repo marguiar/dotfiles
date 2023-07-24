@@ -1,42 +1,42 @@
-### This is abbr feature in fish, who creates aliases with asteroids! Read the docs to understand
-### To add more abbreviations, just make as the below ones and execute the script 'create-abbr.sh'
+### This is abb feature in fish, who creates aliases with asteroids! Read the docs to understand
+### To add more abbeviations, just make as the below ones and execute the script 'create-abbr -a --.sh'
 ### GIT
-abbr gs git status
-abbr ga git add
-abbr gc git commit -m
-abbr gck git checkout
-abbr gp git pull
-abbr gps git push
-abbr gcl git clone
-abbr gb git branch
-abbr gl git log
+abbr -a -- gs 'git status'
+abbr -a -- ga 'git add'
+abbr -a -- gc 'git commit -m'
+abbr -a -- gck 'git checkout'
+abbr -a -- gp 'git pull'
+abbr -a -- gps 'git push'
+abbr -a -- gcl 'git clone'
+abbr -a -- gb 'git branch'
+abbr -a -- gl 'git log'
 ### APT
-abbr up sudo apt update && sudo apt upgrade -y
+abbr -a -- up 'sudo apt update && sudo apt upgrade -y'
 ### NPM
-abbr npmi npm install
-abbr npmr npm run
-abbr npmd npm run dev
-abbr npmsv npm run serve
-abbr npmh npm run hot
-abbr npmw npm run watch
-abbr npmp npm run prod
-abbr npmt npm run test
-abbr npmrm npm rm
+abbr -a -- npmi 'npm install'
+abbr -a -- npmr 'npm run'
+abbr -a -- npmd 'npm run dev'
+abbr -a -- npmsv 'npm run serve'
+abbr -a -- npmh 'npm run hot'
+abbr -a -- npmw 'npm run watch'
+abbr -a -- npmp 'npm run prod'
+abbr -a -- npmt 'npm run test'
+abbr -a -- npmrm 'npm rm'
 ### YARN
-abbr ya yarn
-abbr yaa yarn add
-abbr yar yarn run
+abbr -a -- ya 'yarn'
+abbr -a -- yaa 'yarn add'
+abbr -a -- yar 'yarn run'
 ### MOVE
-abbr down cd ~/Downloads
-abbr dot cd ~/dotfiles
+abbr -a -- down 'cd ~/Downloads'
+abbr -a -- dot 'cd ~/dotfiles'
 ### SYSTEM
-abbr chx chmod +x
-abbr chr chmod -R
+abbr -a -- chx 'chmod +x'
+abbr -a -- chr 'chmod -R'
 ### MISC
-abbr nf neofetch
+abbr -a -- nf 'neofetch'
 ### DOCKER
-abbr dp docker ps
-abbr dpa docker ps -a
-abbr dc docker compose
-abbr dcp docker compose ps
-abbr dcpa docker compose ps -a
+abbr -a -- dp 'docker ps'
+abbr -a -- dpa 'docker ps -a'
+abbr -a -- dc 'docker compose'
+abbr -a -- dcp 'docker compose ps'
+abbr -a -- dcpa 'docker compose ps -a'

@@ -1,12 +1,11 @@
-i3-gaps
-i3status
-i3blocks
-i3lock-fancy
-suckless-tools
-rofi
-arandr
-xdotool
-wmctrl
-lxappearance
-nitrogen
-fonts-cascadia-code
+- install i3 polybar playerctl suckless-tools rofi arandr xdotool wmctrl nitrogen fonts-cascadia-code xfce4-terminal git
+- install google-chrome vscode spotify ulauncher jetbrains-mono docker imagemagick picom
+- install fish omf logiops
+- install i3-cinnamon (if cinnamon)
+- get dotfiles backup
+- create symlinks (ln -s from to)
+- config fish's abbr
+- install https://github.com/betterlockscreen/betterlockscreen
+- update i3 to > 4.22
+- echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode
+- set -U fish_greeting

@@ -16,6 +16,12 @@ set $mon_2 output VGA-0
 set $is_float floating enable
 # default terminal
 set $term xfce4-terminal
+# browser
+set $browser google-chrome
+# calc
+set $calc gnome-calculator
+# file explorer
+set $explorer nemo
 
 ## WORKSPACES
 # labels
@@ -84,22 +90,24 @@ floating_modifier Mod1
 # Terminal
 $sup+Return exec $term
 # Browser
-$sup+b exec chrome
+$sup+b exec $browser
 # Calculator
-$sup+c exec gnome-calculator
+$sup+c exec $calc
 # Nemo
-$sup+e exec nemo
+$sup+e exec $explorer
 #Spotify
-$sup+m exec spotify
-# Rofi Menu
+$sup+m exec flatpak run com.spotify.Client
+# Ulauncher
 bindsym Mod1+space exec ulauncher-toggle
+# Cinnamon Theme
+$sup+t exec cinnamon-settings themes
 
 ## SHORTCUTS 'xev' to get key press
 $sup+s exec cinnamon-settings
 # Screenshot
 bindsym --release Print exec gnome-screenshot
 bindsym --release Mod1+Print exec gnome-screenshot -w
-bindsym --release Shift+Print exec gnome-screenshot -ac
+bindsym --release Shift+Print exec gnome-screenshot -a
 
 $sup+F10 exec cinnamon-settings sound
 
@@ -155,6 +163,7 @@ mode "resize" {
         $sup+r mode "default"
 }
 $sup+r mode "resize"
+$sup+Shift+l exec betterlockscreen -l dim
 
 ## START-UP
 $exe_always ~/.config/polybar/launch.sh --forest -r
@@ -162,12 +171,13 @@ $exe_always ~/.config/i3/scripts/autolayout.py
 $exe nitrogen --restore
 $exe picom -CGb
 $exe redshift
+# disable screen-saver
 $exe xset -dpms s off
 $exe ulauncher --hide-window --no-window-shadow
 
 ## I3-GAPS
 for_window [class=".*"] border pixel 2
-gaps inner 8
+gaps inner 4
 hide_edge_borders smart
 
 ## WINDOW AND BORDER STYLE
